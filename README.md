@@ -1,6 +1,8 @@
 # eWaterCycle plugin for MARRMoT hydrological model
 
 [![Research Software Directory Badge](https://img.shields.io/badge/rsd-00a3e3.svg)](https://www.research-software.nl/software/ewatercycle-marrmot)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8413755.svg)](https://doi.org/10.5281/zenodo.8413755)
+[![PyPI](https://img.shields.io/pypi/v/ewatercycle-marrmot)](https://pypi.org/project/ewatercycle-marrmot/)
 
 MARRMoT plugin for [eWatercycle](https://ewatercycle.readthedocs.io/).
 

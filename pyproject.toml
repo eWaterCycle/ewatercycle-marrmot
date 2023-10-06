@@ -35,3 +35,6 @@ MarrmotM01 = "ewatercycle_marrmot.model:MarrmotM01"
 MarrmotM14 = "ewatercycle_marrmot.model:MarrmotM14"
 [project.entry-points."ewatercycle.forcings"]
 MarrmotForcing = "ewatercycle_marrmot.forcing:MarrmotForcing"
+
+[project.urls]
+homepage = "https://github.com/eWaterCycle/ewatercycle-marrmot/"
