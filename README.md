@@ -4,7 +4,7 @@
 
 MARRMoT plugin for [eWatercycle](https://ewatercycle.readthedocs.io/).
 
-MARRMoT documentation at hhttps://github.com/wknoben/MARRMoT .
+MARRMoT documentation at https://github.com/wknoben/MARRMoT .
 
 ## Installation
 
