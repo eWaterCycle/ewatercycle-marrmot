@@ -10,6 +10,7 @@ from esmvalcore.experimental.recipe_output import RecipeOutput
 from ewatercycle.base.forcing import FORCING_YAML
 from ewatercycle_marrmot.forcing import MarrmotForcing, build_marrmot_recipe
 from ewatercycle.testing.helpers import reyamlify
+import ewatercycle_marrmot.forcing_diagnostic_script
 
 
 @pytest.fixture
@@ -48,6 +49,7 @@ class TestGenerate:
 
     @pytest.fixture
     def reference_recipe(self):
+        ewatercycle_marrmot.forcing
         return {
             "diagnostics": {
                 "diagnostic_daily": {
@@ -62,7 +64,7 @@ class TestGenerate:
                     ],
                     "description": "marrmot input preprocessor for daily data",
                     "scripts": {
-                        "script": {"basin": "Rhine", "script": "hydrology/marrmot.py"}
+                        "script": {"basin": "Rhine", "script": str(Path(ewatercycle_marrmot.forcing_diagnostic_script.__file__).absolute())}
                     },
                     "variables": {
                         "pr": {
@@ -299,7 +301,7 @@ diagnostics:
   diagnostic:
     scripts:
       script:
-        script: hydrology/marrmot.py
+        script: {Path(ewatercycle_marrmot.forcing_diagnostic_script.__file__).absolute()}
         basin: Rhine
     variables:
       tas:
