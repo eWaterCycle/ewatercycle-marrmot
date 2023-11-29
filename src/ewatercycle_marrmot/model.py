@@ -5,6 +5,7 @@ import logging
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, ItemsView, Literal
+import numpy as np
 
 import scipy.io as sio
 from pydantic import PrivateAttr, model_validator
@@ -15,6 +16,18 @@ from ewatercycle_marrmot.forcing import MarrmotForcing
 from ewatercycle.util import get_time
 
 logger = logging.getLogger(__name__)
+
+
+DEFAULT_SOLVER: np.ndarray = np.array(
+    [[(
+        np.array(['createOdeApprox_IE'], dtype='<U18'),
+        np.array([[0.1]]),
+        np.array([[6.]])
+    )]],
+    dtype=[
+        ('name', 'O'), ('resnorm_tolerance', 'O'), ('resnorm_maxiter', 'O')
+    ]
+)
 
 
 @dataclass
@@ -90,6 +103,9 @@ class MarrmotM01(ContainerizedModel):
     _model_name: str = PrivateAttr("m_01_collie1_1p_1s")
     _config: dict = PrivateAttr()
 
+    _default_parameters: list[float] = [10.]
+    _default_store_ini: list[float] = [0.]
+
     @model_validator(mode="after")
     def _initialize_config(self) -> "MarrmotM01":
         # TODO: remove assertions after refactoring Forcing
@@ -99,6 +115,17 @@ class MarrmotM01(ContainerizedModel):
         self._config = sio.loadmat(
             str(self.forcing.directory / self.forcing.forcing_file), mat_dtype=True
         )
+
+        # Set defaults if missing. Can be missing due to forcing being generated.
+        # This cannot be done in forcing due to the Marrmot forcing being generic for
+        # any Marrmot model, and the parameters are different for each model.
+        if "parameters" not in self._config:
+            self._config["parameters"] = np.array(self._default_parameters)
+        if "store_ini" not in self._config:
+            self._config["store_ini"] = np.array(self._default_store_ini)
+        if "solver" not in self._config:
+            self._config["solver"] = DEFAULT_SOLVER
+
         return self
 
     def _make_cfg_file(self, **kwargs) -> Path:
@@ -230,6 +257,8 @@ class MarrmotM14(ContainerizedModel):
                 self._config["store_ini"] = self._default_store_ini
         else:
             self._config["store_ini"] = self._default_store_ini
+        if "solver" not in self._config:
+            self._config["solver"] = DEFAULT_SOLVER
 
         return self
 
