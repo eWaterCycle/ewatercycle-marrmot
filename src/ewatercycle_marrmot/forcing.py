@@ -167,6 +167,8 @@ def build_marrmot_recipe(
         # .lump()
         .add_variables(("tas", "pr", "psl", "rsds"))
         .add_variable("rsdt", mip="CFday")
-        .script("hydrology/marrmot.py", {"basin": shape.stem})
+        .script(
+            str((Path(__file__).parent / "forcing_diagnostic_script.py").absolute()),
+            {"basin": shape.stem})
         .build()
     )
