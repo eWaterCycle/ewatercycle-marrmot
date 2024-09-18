@@ -134,6 +134,8 @@ class TestGenerate:
             """\
         start_time: '1989-01-02T00:00:00Z'
         end_time: '1999-01-02T00:00:00Z'
+        shape: Rhine.shp
+        filenames: {}
         forcing_file: marrmot.mat
         """
         )
@@ -143,7 +145,7 @@ class TestGenerate:
     def test_saved_yaml(self, forcing, tmp_path):
         saved_forcing = MarrmotForcing.load(tmp_path)
         # shape should is not included in the yaml file
-        forcing.shape = None
+        forcing.shape = forcing.directory / "Rhine.shp"
 
         assert forcing == saved_forcing
 
