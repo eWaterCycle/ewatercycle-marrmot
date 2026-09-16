@@ -47,7 +47,7 @@ class MarrmotForcing(DefaultForcing):
         .. code-block:: python
 
             from ewatercycle.forcing import sources
-            from ewatercycle.testing.fixtures import rhine_shape
+            from ewatercycle.testing import rhine_shape
 
             shape = rhine_shape()
             forcing = sources.MarrmotForcing.generate(
